@@ -2,6 +2,8 @@ package proxiad.e_commerce.order.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import proxiad.e_commerce.order.dto.OrderDTO;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/orders")
 @Tag(name = "Order API", description = "Endpoints for managing orders")
+@Transactional
 public class OrderAPI {
 
     private final OrderServices orderServices;
