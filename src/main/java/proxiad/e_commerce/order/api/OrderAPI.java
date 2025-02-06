@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import proxiad.e_commerce.order.dto.OrderDTO;
 import proxiad.e_commerce.order.entities.Order;
@@ -27,6 +28,7 @@ public class OrderAPI {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_CAN_WRITE')")
     @Operation(summary = "Create a new order", description = "Saves a new order in the database")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
         Order order = orderServices.mapToEntity(orderDTO);
@@ -35,6 +37,7 @@ public class OrderAPI {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_CAN_WRITE') || hasRole('ROLE_CAN_READ')")
     @Operation(summary = "Get order by ID", description = "Retrieve an order using its ID")
     public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
         Optional<Order> order = orderServices.getOrderById(id);
@@ -43,6 +46,7 @@ public class OrderAPI {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_CAN_WRITE') || hasRole('ROLE_CAN_READ')")
     @Operation(summary = "Get all orders", description = "Retrieve all orders in the system")
     public ResponseEntity<List<OrderDTO>> getAllOrders() {
         List<Order> orders = orderServices.getAllOrders();
@@ -53,6 +57,7 @@ public class OrderAPI {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_CAN_WRITE')")
     @Operation(summary = "Update an order", description = "Modify an existing order by ID")
     public ResponseEntity<OrderDTO> updateOrder(@PathVariable Long id, @RequestBody OrderDTO orderDTO) {
         Order order = orderServices.mapToEntity(orderDTO);
@@ -61,6 +66,7 @@ public class OrderAPI {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_CAN_DELETE')")
     @Operation(summary = "Delete an order", description = "Remove an order using its ID")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderServices.deleteOrder(id);

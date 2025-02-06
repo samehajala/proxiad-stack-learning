@@ -5,9 +5,9 @@ services:
     container_name: postgres-oms
     restart: always
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     environment:
-      POSTGRES_DB: nom_de_ta_bd
+      POSTGRES_DB: ${POSTGRES_DB:-nom_de_ta_bd}
       POSTGRES_USER: proxiad
       POSTGRES_PASSWORD: proxiad
     volumes:
