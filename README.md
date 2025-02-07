@@ -1,22 +1,46 @@
 # PROXIAD STACK LEARNING
+## Overview
 
-## QUICK START
+This project demonstrates the use of Keycloak to authenticate requests to a Spring Boot backend in a Dockerized environment.
+## Quick Start
 
-Start keycloak using 
-`docker run -p 8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.1 start-dev`
+    Clone the repository:
+```
+git clone <repo-url>
+```
+Copy the environment file:
+```
+cp .env.example .env
+```
+Start the services:
+```
+docker compose up
+```
+Open `http://localhost:8080` and log in with:
 
-Create a realm (`myrealm`)
+- Username: `admin`
+- Password: `admin`
 
-Create a client (which is our app)
+Create a realm named `myrealm`.
 
-Create these permession `CAN_WRITE`, `CAN_READ`, `CAN_DELETE`
+Create a client named `myapp`.
 
-Create two user and assign to them different permissions 
+Create two users:
 
-To generate an jwt token send a request with this body x-www-form-urlencoded
+    user → Assign `CAN_READ` role
+    admin → Assign `CAN_WRITE` role
 
-- grant_type:password
-- client_id:myapp-api
-- username:<username>
-- password<username>
-- client_secret:<the-client-secret> (if set Confidential to true)
+Generate an access token by making a POST request to:
+
+`http://localhost:8080/realms/myrealm/protocol/openid-connect/token`
+
+Request body (x-www-form-urlencoded):
+
+```
+grant_type=password
+client_id=myapp
+username=user
+password=user
+client_secret=<client-secret>
+```
+Use the obtained Bearer token to authenticate requests to the Spring Boot API.

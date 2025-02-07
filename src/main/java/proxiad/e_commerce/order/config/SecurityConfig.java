@@ -26,10 +26,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/api-docs/swagger-config").permitAll()
+                .requestMatchers("/api-docs/**").permitAll()
                 .anyRequest().authenticated());
                     
         http
-                .oauth2ResourceServer((oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthConverter)));
+                .oauth2ResourceServer((oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))));
                         
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS));
