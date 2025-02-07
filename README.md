@@ -6,7 +6,7 @@ This project demonstrates the use of Keycloak to authenticate requests to a Spri
 
     Clone the repository:
 ```
-git clone <repo-url>
+git clone https://github.com/samehajala/proxiad-stack-learning.git
 ```
 Copy the environment file:
 ```
