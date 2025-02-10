@@ -66,7 +66,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
             return Set.of();
         }
         resource = (Map<String, Object>) resourceAccess.get(resourceId);
-
+        
         resourceRoles = (Collection<String>) resource.get("roles");
         System.out.println("resourceRoles = " + resourceRoles);
         return resourceRoles
